@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/grid_city/demo/fly_camera.gd" id="1_tqr4k"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_generator.gd" id="2_bcmye"]
+[ext_resource type="Resource" path="res://addons/grid_city/demo/demo_layout.tres" id="3_vqjra"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6i7g1"]
+
+[sub_resource type="Sky" id="Sky_328nc"]
+sky_material = SubResource("ProceduralSkyMaterial_6i7g1")
+
+[sub_resource type="Environment" id="Environment_bem0m"]
+background_mode = 2
+sky = SubResource("Sky_328nc")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="LandMaterial"]
+albedo_color = Color(0.36, 0.42, 0.3, 1)
+roughness = 1.0
+
+[sub_resource type="PlaneMesh" id="LandMesh"]
+material = SubResource("LandMaterial")
+size = Vector2(4000, 4000)
+
+[node name="Demo" type="Node3D" unique_id=579758480]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=54368618]
+environment = SubResource("Environment_bem0m")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=944230086]
+transform = Transform3D(0.81915206, 0.43938506, -0.36868784, 0, 0.64278764, 0.76604444, 0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
+shadow_enabled = true
+
+[node name="FlyCamera" type="Camera3D" parent="." unique_id=1266739356]
+transform = Transform3D(0.8198428, 0.10262903, -0.5633161, 0, 0.98380595, 0.17923693, 0.5725886, -0.14694612, 0.80656624, 60, 140, 1080)
+far = 3000.0
+script = ExtResource("1_tqr4k")
+
+[node name="Land" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, -0.02, 500)
+mesh = SubResource("LandMesh")
+
+[node name="GridCityGenerator" type="Node3D" parent="." unique_id=676469146]
+script = ExtResource("2_bcmye")
+layout = ExtResource("3_vqjra")
+output_path = "res://addons/grid_city/demo/demo_city.tscn"
+build_on_ready = true
+
+[node name="Help" type="CanvasLayer" parent="." unique_id=1922264554]
+
+[node name="Label" type="Label" parent="Help" unique_id=346680291]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 16.0
+offset_bottom = 12.0
+text = "Right mouse / right stick: look   WASD / left stick: fly   Q E / triggers: down, up   Shift: fast"

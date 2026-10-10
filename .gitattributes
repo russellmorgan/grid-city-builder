@@ -1,0 +1,7 @@
+# Normalize line endings for all text files.
+* text=auto eol=lf
+
+# Only the addon ships in the Asset Store / Asset Library download.
+/**        export-ignore
+/addons    !export-ignore
+/addons/** !export-ignore

@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.2, 0.42, 0.22, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.9
+radial_segments = 12
+rings = 1
+
+[node name="TrashBin" type="Node3D"]
+
+[node name="Bin" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("CylinderMesh_2")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1

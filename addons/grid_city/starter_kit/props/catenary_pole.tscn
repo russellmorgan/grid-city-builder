@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+top_radius = 0.15
+bottom_radius = 0.15
+height = 7
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_3"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(0.15, 0.15, 6)
+
+[node name="CatenaryPole" type="Node3D"]
+
+[node name="Pole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("CylinderMesh_2")
+visibility_range_end = 300.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+
+[node name="Arm" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 6.8, 3)
+mesh = SubResource("BoxMesh_3")
+visibility_range_end = 300.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+metadata/no_collider = true

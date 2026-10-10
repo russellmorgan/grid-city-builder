@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 2.5
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.8, 0.12, 0.1, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(0.8, 0.8, 0.05)
+
+[node name="StopSign" type="Node3D"]
+
+[node name="Post" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_2")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+
+[node name="Sign" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 2.4, -0.06)
+mesh = SubResource("BoxMesh_4")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+metadata/no_collider = true

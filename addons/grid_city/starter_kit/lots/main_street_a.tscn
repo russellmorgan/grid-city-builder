@@ -1,0 +1,74 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/building_brick.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/building_concrete.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/building_painted.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="4"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/awning.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/parked_car_red.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/parked_car_blue.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/parked_car_white.tscn" id="8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.68, 0.66, 0.62, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(70, 0.15, 70)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.24, 0.24, 0.26, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(35, 0.02, 35)
+
+[node name="MainStreetA" type="Node3D"]
+metadata/lot_size = Vector2(70, 70)
+
+[node name="Slab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="FrontShops" type="Marker3D" parent="."]
+transform = Transform3D(16.5, 0, -0, 0, 1, 0, 0, 0, 20, -26.25, 0.15, -25)
+script = ExtResource("4")
+variants = Array[PackedScene]([ExtResource("1"), ExtResource("2"), ExtResource("3")])
+height_range = Vector2(8, 16)
+repeat = 4
+step = Vector3(17.5, 0, 0)
+
+[node name="Awnings" type="Marker3D" parent="."]
+transform = Transform3D(15, 0, -0, 0, 1, 0, 0, 0, 1, -26.25, 3.6, -35)
+script = ExtResource("4")
+variants = Array[PackedScene]([ExtResource("5")])
+chance = 0.6
+repeat = 4
+step = Vector3(17.5, 0, 0)
+
+[node name="BackShops" type="Marker3D" parent="."]
+transform = Transform3D(16.5, 0, -0, 0, 1, 0, 0, 0, 20, -26.25, 0.15, 25)
+script = ExtResource("4")
+variants = Array[PackedScene]([ExtResource("1"), ExtResource("2"), ExtResource("3")])
+height_range = Vector2(8, 14)
+repeat = 2
+step = Vector3(17.5, 0, 0)
+
+[node name="CarPark" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 17.5, 0.16, 17.5)
+mesh = SubResource("BoxMesh_4")
+
+[node name="BackCars" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 6, 0.15, 30)
+script = ExtResource("4")
+variants = Array[PackedScene]([ExtResource("6"), ExtResource("7"), ExtResource("8")])
+chance = 0.5
+yaw_options = PackedFloat32Array(90, 270)
+repeat = 6
+step = Vector3(4.5, 0, 0)
+
+[node name="MarkerSlot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 17.5, 0.2, 12)

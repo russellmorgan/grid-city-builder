@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.45, 0.3, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(1.8, 0.45, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(1.8, 0.5, 0.1)
+
+[node name="Bench" type="Node3D"]
+
+[node name="Seat" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.225, 0)
+mesh = SubResource("BoxMesh_2")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+
+[node name="Back" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.25)
+mesh = SubResource("BoxMesh_3")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1

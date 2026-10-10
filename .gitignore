@@ -1,0 +1,11 @@
+# Godot 4+
+.godot/
+/android/
+*.tmp
+
+# OS junk
+.DS_Store
+__MACOSX/
+
+# Baked demo city (the demo builds it on start; press Bake to make one)
+addons/grid_city/demo/demo_city.tscn

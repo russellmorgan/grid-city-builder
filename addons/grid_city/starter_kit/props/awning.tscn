@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.75, 0.2, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(1, 0.12, 2.4)
+
+[node name="Awning" type="Node3D"]
+
+[node name="Canvas" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2)
+mesh = SubResource("BoxMesh_2")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+metadata/no_collider = true

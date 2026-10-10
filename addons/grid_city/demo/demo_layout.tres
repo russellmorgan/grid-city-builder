@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="GridCityLayout" format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/streets/edge_avenue.tscn" id="1_wdba5"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/traffic_light.tscn" id="2_dg2yt"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/plaza_lot.tscn" id="3_hyba8"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/police_station.tscn" id="4_byud3"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/downtown_a.tscn" id="5_flsew"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/downtown_b.tscn" id="6_kbe7t"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/main_street_a.tscn" id="7_j4d6u"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/main_street_b.tscn" id="8_qtagq"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/industrial_a.tscn" id="9_b88vl"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/industrial_b.tscn" id="10_q37yi"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/parking_2x1.tscn" id="11_fafyr"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/park_2x2.tscn" id="12_x8wtj"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/barrier_rail.tscn" id="13_2h6gd"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/barrier_freeway.tscn" id="14_caydf"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/barrier_quay.tscn" id="15_khj6f"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/lots/barrier_corner.tscn" id="16_p5pmg"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_layout.gd" id="17_wphia"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/streets/edge_local.tscn" id="18_insqv"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/stop_sign.tscn" id="19_58x56"]
+
+[resource]
+script = ExtResource("17_wphia")
+rows = PackedStringArray("CNNNNNNNNC", "WIIIMMMIIE", "WMPPMMLLME", "WMPPDDDMME", "WMMDDZDDME", "WMDDDDDMME", "WIMMDDMLME", "WIIMMMMLIE", "WIIIIIIIIE", "CSSSSSSSSC")
+barrier_letters = "NSWEC"
+superblocks = Dictionary[String, Vector2i]({
+"L": Vector2i(2, 1),
+"P": Vector2i(2, 2)
+})
+avenue_lines = PackedInt32Array(1, 5, 9)
+pools = Dictionary[String, Array]({
+"C": [ExtResource("16_p5pmg")],
+"D": [ExtResource("5_flsew"), ExtResource("6_kbe7t")],
+"E": [ExtResource("14_caydf")],
+"I": [ExtResource("9_b88vl"), ExtResource("10_q37yi")],
+"L": [ExtResource("11_fafyr")],
+"M": [ExtResource("7_j4d6u"), ExtResource("8_qtagq")],
+"N": [ExtResource("13_2h6gd")],
+"P": [ExtResource("12_x8wtj")],
+"S": [ExtResource("15_khj6f")],
+"W": [ExtResource("14_caydf")]
+})
+cell_overrides = Dictionary[Vector2i, PackedScene]({
+Vector2i(3, 6): ExtResource("4_byud3"),
+Vector2i(5, 4): ExtResource("3_hyba8")
+})
+cell_markers = Dictionary[Vector2i, String]({
+Vector2i(2, 1): "Warehouse Dock",
+Vector2i(5, 4): "Town Square",
+Vector2i(6, 5): "Bus Depot"
+})
+export_marker_prefixes = PackedStringArray("Post")
+avenue_edge = ExtResource("1_wdba5")
+street_edge = ExtResource("18_insqv")
+avenue_junction_prop = ExtResource("2_dg2yt")
+street_junction_prop = ExtResource("19_58x56")
+avenue_lane_offsets = PackedFloat32Array(2.5, 7.5)
+street_lane_offsets = PackedFloat32Array(2.5)

@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.36, 0.5, 0.62, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(4, 2.4, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(4.2, 0.15, 1.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(3, 0.45, 0.5)
+
+[node name="BusStop" type="Node3D"]
+
+[node name="Back" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.75)
+mesh = SubResource("BoxMesh_2")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+
+[node name="Roof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("BoxMesh_4")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+metadata/no_collider = true
+
+[node name="Seat" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.225, 0.4)
+mesh = SubResource("BoxMesh_5")
+visibility_range_end = 150.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1

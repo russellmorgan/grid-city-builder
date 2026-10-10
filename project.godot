@@ -1,0 +1,15 @@
+; Development project for the Grid City Builder addon (addons/grid_city/).
+; Only addons/grid_city/ ships to the Asset Store (see .gitattributes).
+
+config_version=5
+
+[application]
+
+config/name="Grid City Builder"
+run/main_scene="res://addons/grid_city/demo/demo.tscn"
+config/features=PackedStringArray("4.4")
+config/icon="res://addons/grid_city/icon.svg"
+
+[rendering]
+
+renderer/rendering_method="forward_plus"

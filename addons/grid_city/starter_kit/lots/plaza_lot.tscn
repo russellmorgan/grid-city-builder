@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/streetlight.tscn" id="1"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="2"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/tree.tscn" id="3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.68, 0.66, 0.62, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(70, 0.15, 70)
+
+[node name="PlazaLot" type="Node3D"]
+metadata/lot_size = Vector2(70, 70)
+
+[node name="Slab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="MarkerSlot" type="Marker3D" parent="."]
+transform = Transform3D(-1, 0, -0, 0, 1, 0, 0, 0, -1, 0, 0.2, 10)
+
+[node name="Lights" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -30, 0.15, -30)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("1")])
+repeat = 2
+step = Vector3(60, 0, 0)
+
+[node name="Trees" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -30, 0.15, 30)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("3")])
+chance = 0.8
+repeat = 4
+step = Vector3(20, 0, 0)

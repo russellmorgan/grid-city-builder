@@ -1,0 +1,118 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/bus_stop.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="3"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/streetlight.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/tree.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/hydrant.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/trash_bin.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/bench.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/mailbox.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/newsstand.tscn" id="10"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.72, 0.71, 0.68, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(70, 0.15, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.95, 0.8, 0.12, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(70, 0.02, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5"]
+albedo_color = Color(0.95, 0.95, 0.95, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_6"]
+material = SubResource("StandardMaterial3D_5")
+size = Vector3(70, 0.02, 0.15)
+
+[sub_resource type="Curve3D" id="Curve3D_7"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -35, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="EdgeAvenue" type="Node3D"]
+
+[node name="Sidewalk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.075, 12.5)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="CentreLine" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.012, 0.2)
+mesh = SubResource("BoxMesh_4")
+
+[node name="LaneLine" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.012, 5)
+mesh = SubResource("BoxMesh_6")
+
+[node name="Lane0" type="Path3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.1, 2.5)
+curve = SubResource("Curve3D_7")
+
+[node name="Lane1" type="Path3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.1, 7.5)
+curve = SubResource("Curve3D_7")
+
+[node name="BusStop" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.15, 13.6)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("2")])
+chance = 0.25
+
+[node name="Lamps" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -17.5, 0.15, 13.8)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("4")])
+repeat = 2
+step = Vector3(35, 0, 0)
+
+[node name="Trees" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -26, 0.15, 13)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("5")])
+chance = 0.6
+jitter = Vector3(1.5, 0, 0)
+yaw_options = PackedFloat32Array(0, 90, 180, 270)
+repeat = 2
+step = Vector3(52, 0, 0)
+
+[node name="Hydrant" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -8, 0.15, 11)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("6")])
+chance = 0.5
+
+[node name="Trash" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 6, 0.15, 11)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("7")])
+chance = 0.5
+
+[node name="Bench" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -4.5, 0.15, 14)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("8")])
+chance = 0.3
+
+[node name="Mailbox" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 12, 0.15, 11)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("9")])
+chance = 0.25
+
+[node name="Newsstand" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -13, 0.15, 13.5)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("10")])
+chance = 0.2

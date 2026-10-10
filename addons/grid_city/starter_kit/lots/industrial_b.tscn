@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/building_warehouse.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/building_concrete.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="3"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/container_orange.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/container_teal.tscn" id="5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.47, 0.44, 0.4, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(70, 0.15, 70)
+
+[node name="IndustrialB" type="Node3D"]
+metadata/lot_size = Vector2(70, 70)
+
+[node name="Slab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.075, 0)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="WarehouseLeft" type="Marker3D" parent="."]
+transform = Transform3D(30, 0, -0, 0, 1, 0, 0, 0, 45, -17.5, 0.15, 10)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("1"), ExtResource("2")])
+height_range = Vector2(8, 14)
+
+[node name="WarehouseRight" type="Marker3D" parent="."]
+transform = Transform3D(30, 0, -0, 0, 1, 0, 0, 0, 35, 17.5, 0.15, 15)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("1")])
+chance = 0.8
+height_range = Vector2(6, 12)
+
+[node name="Stacks" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -30, 0.15, -26)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("4"), ExtResource("5")])
+chance = 0.7
+repeat = 3
+step = Vector3(0, 0, 3)
+
+[node name="Stacks2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -30, 2.75, -26)
+script = ExtResource("3")
+variants = Array[PackedScene]([ExtResource("4"), ExtResource("5")])
+chance = 0.4
+repeat = 3
+step = Vector3(0, 0, 3)
+
+[node name="MarkerSlot" type="Marker3D" parent="."]
+transform = Transform3D(-1, 0, -0, 0, 1, 0, 0, 0, -1, 17, 0.2, -20)

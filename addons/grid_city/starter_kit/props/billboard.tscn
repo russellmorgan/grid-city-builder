@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(0.4, 7, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.95, 0.95, 0.95, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(8, 3.5, 0.3)
+
+[node name="Billboard" type="Node3D"]
+
+[node name="Post" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("BoxMesh_2")
+visibility_range_end = 300.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+
+[node name="Board" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 8.2, 0)
+mesh = SubResource("BoxMesh_4")
+visibility_range_end = 300.0
+visibility_range_end_margin = 10.0
+visibility_range_fade_mode = 1
+metadata/no_collider = true

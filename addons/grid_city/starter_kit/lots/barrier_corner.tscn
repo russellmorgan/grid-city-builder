@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.55, 0.3, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(85, 40, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(15, 40, 85)
+
+[node name="BarrierCorner" type="Node3D"]
+metadata/lot_size = Vector2(100, 100)
+
+[node name="BlockA" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -7.5, 20, 0)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="BlockB" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 42.5, 20, 7.5)
+mesh = SubResource("BoxMesh_3")
+metadata/solid = true

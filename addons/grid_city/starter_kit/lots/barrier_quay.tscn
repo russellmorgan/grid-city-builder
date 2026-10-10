@@ -1,0 +1,70 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/bollard.tscn" id="1"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="2"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/streetlight.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/bench.tscn" id="4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.68, 0.66, 0.62, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(100, 0.15, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(100, 1.2, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5"]
+albedo_color = Color(0.16, 0.36, 0.55, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_6"]
+material = SubResource("StandardMaterial3D_5")
+size = Vector3(100, 0.02, 370)
+
+[node name="BarrierQuay" type="Node3D"]
+metadata/lot_size = Vector2(100, 85)
+
+[node name="Promenade" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.075, -35)
+mesh = SubResource("BoxMesh_2")
+metadata/solid = true
+
+[node name="Railing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.75, -27.6)
+mesh = SubResource("BoxMesh_4")
+metadata/solid = true
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.05, 157.5)
+mesh = SubResource("BoxMesh_6")
+
+[node name="Bollards" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -45, 0.15, -29)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("1")])
+repeat = 10
+step = Vector3(10, 0, 0)
+
+[node name="Lights" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -37.5, 0.15, -40)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("3")])
+repeat = 3
+step = Vector3(37.5, 0, 0)
+
+[node name="Benches" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -25, 0.15, -30)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("4")])
+chance = 0.6
+yaw_options = PackedFloat32Array(180)
+repeat = 3
+step = Vector3(25, 0, 0)

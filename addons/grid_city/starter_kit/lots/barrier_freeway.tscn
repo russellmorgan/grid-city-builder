@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://addons/grid_city/starter_kit/props/billboard.tscn" id="1"]
+[ext_resource type="Script" path="res://addons/grid_city/grid_city_prop_slot.gd" id="2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.47, 0.44, 0.4, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = SubResource("StandardMaterial3D_1")
+size = Vector3(100, 0.04, 85)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3"]
+albedo_color = Color(0.62, 0.62, 0.6, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(100, 5, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(2, 10, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(100, 1.5, 26)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7"]
+albedo_color = Color(0.24, 0.24, 0.26, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_8"]
+material = SubResource("StandardMaterial3D_7")
+size = Vector3(100, 0.05, 24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_9"]
+material = SubResource("StandardMaterial3D_3")
+size = Vector3(100, 0.9, 0.5)
+
+[node name="BarrierFreeway" type="Node3D"]
+metadata/lot_size = Vector2(100, 85)
+
+[node name="Gravel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("BoxMesh_2")
+
+[node name="SoundWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 2.5, -41.5)
+mesh = SubResource("BoxMesh_4")
+metadata/solid = true
+
+[node name="Pillar0" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -37.5, 5, 12)
+mesh = SubResource("BoxMesh_5")
+metadata/solid = true
+
+[node name="Pillar1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, -12.5, 5, 12)
+mesh = SubResource("BoxMesh_5")
+metadata/solid = true
+
+[node name="Pillar2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 12.5, 5, 12)
+mesh = SubResource("BoxMesh_5")
+metadata/solid = true
+
+[node name="Pillar3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 37.5, 5, 12)
+mesh = SubResource("BoxMesh_5")
+metadata/solid = true
+
+[node name="Deck" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 10.75, 12)
+mesh = SubResource("BoxMesh_6")
+metadata/solid = true
+
+[node name="Roadway" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 11.53, 12)
+mesh = SubResource("BoxMesh_8")
+
+[node name="BarrierIn" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 11.95, -0.75)
+mesh = SubResource("BoxMesh_9")
+
+[node name="BarrierOut" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 0, 11.95, 24.75)
+mesh = SubResource("BoxMesh_9")
+
+[node name="Billboard" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -0, 0, 1, 0, 0, 0, 1, 20, 0.04, -30)
+script = ExtResource("2")
+variants = Array[PackedScene]([ExtResource("1")])
+chance = 0.4
