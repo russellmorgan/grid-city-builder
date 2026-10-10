@@ -2,7 +2,7 @@
 
 Bake believable grid cities in Godot 4 from modular block scenes. You paint a district map as text, list the lot scenes for each district, and press **Bake**. Grid City Builder lays out the streets, sidewalks, kerb corners and junction props. It fills every block with a lot from that district's pool, varies the props and building heights from a seed, and adds navigation lanes plus lightweight box colliders.
 
-![Demo city](https://raw.githubusercontent.com/OWNER/grid-city-builder/main/screenshots/demo_overview.png)
+![Demo city](https://raw.githubusercontent.com/russellmorgan/grid-city-builder/main/screenshots/demo_overview.png)
 
 Everything ships as placeholder boxes in a starter kit, so you can block out a city today and swap in real art (for example Synty's POLYGON City, Kenney's city kits, or your own) one scene at a time.
 
