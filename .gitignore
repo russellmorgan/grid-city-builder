@@ -9,3 +9,7 @@ __MACOSX/
 
 # Baked demo city (the demo builds it on start; press Bake to make one)
 addons/grid_city/demo/demo_city.tscn
+
+# Export settings that can hold credentials (from GitHub's Godot template)
+export.cfg
+export_credentials.cfg
