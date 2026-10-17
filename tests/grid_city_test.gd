@@ -51,6 +51,22 @@ func _initialize() -> void:
 	var again := builder.build(layout)
 	_check(_digest(city) == _digest(again), "two bakes of the same layout differ")
 	again.free()
+
+	var batched_layout: GridCityLayout = layout.duplicate()
+	batched_layout.batch_meshes = true
+	var batched := builder.build(batched_layout)
+	_check(builder.errors.is_empty(), "batched bake errors: %s" % ", ".join(builder.errors))
+	var plain := _drawn(city)
+	var merged := _drawn(batched)
+	_check(batched.has_node("Batches"), "batched city has no Batches node")
+	_check(merged[0] < plain[0], "batching left %d mesh instances of %d" % [merged[0], plain[0]])
+	_check(merged[0] + merged[1] == plain[0], "batching changed the drawn mesh count: %d + %d vs %d" % [merged[0], merged[1], plain[0]])
+	_check(batched.find_children("*", "CollisionShape3D", true, false).size() == city.find_children("*", "CollisionShape3D", true, false).size(),
+			"batching changed the collision shapes")
+	var batched_again := builder.build(batched_layout)
+	_check(_digest(batched) == _digest(batched_again), "two batched bakes differ")
+	batched_again.free()
+	batched.free()
 	city.free()
 
 	var broken: GridCityLayout = layout.duplicate()
@@ -117,6 +133,18 @@ func _rel(node: Node3D, ancestor: Node3D) -> Transform3D:
 
 
 ## Every node's path, class, scene and transform, in tree order.
+## [visible MeshInstance3Ds, instances inside MultiMeshInstance3Ds].
+func _drawn(city: Node) -> Array[int]:
+	var meshes := 0
+	var instances := 0
+	for mi: MeshInstance3D in city.find_children("*", "MeshInstance3D", true, false):
+		if mi.mesh != null and mi.is_visible_in_tree() == mi.visible and mi.visible:
+			meshes += 1
+	for mm: MultiMeshInstance3D in city.find_children("*", "MultiMeshInstance3D", true, false):
+		instances += mm.multimesh.instance_count
+	return [meshes, instances]
+
+
 func _digest(city: Node) -> int:
 	var parts := PackedStringArray()
 	for node in city.find_children("*", "", true, false):

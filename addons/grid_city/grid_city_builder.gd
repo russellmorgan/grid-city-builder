@@ -64,6 +64,8 @@ func build(layout: GridCityLayout) -> Node3D:
 	_build_streets()
 	if layout.lanes_enabled:
 		_build_junction_lanes()
+	if layout.batch_meshes:
+		GridCityBatcher.new().batch(_city, layout.batch_chunk)
 	_own(_city)
 	return _city
 

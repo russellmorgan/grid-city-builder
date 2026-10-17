@@ -92,6 +92,16 @@ extends Resource
 @export_flags_3d_physics var collision_layer := 1
 
 
+@export_group("Batching")
+## Merge repeated static meshes (props, edge and lot meshes) into
+## MultiMeshInstance3Ds per `batch_chunk` square, collapsing hundreds of draw
+## calls on renderers that don't batch (Compatibility/web). Batched props stop
+## being scene instances (see GridCityBatcher). The bake must run windowed:
+## the headless dummy renderer drops MultiMesh data on save.
+@export var batch_meshes := false
+@export var batch_chunk := 200.0
+
+
 func width() -> int:
 	return rows[0].length() if not rows.is_empty() else 0
 
