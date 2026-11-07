@@ -6,7 +6,8 @@ extends RefCounted
 ##     Ground   one plane under the whole grid (layout.ground_material)
 ##     Lots     one lot scene per map claim, front (-Z) turned to face an
 ##              avenue when it touches one, else a random street side
-##     Streets  per cell: an edge scene on every side with a street, and the
+##     Streets  per cell: an edge scene on every side with a street (the
+##              entrance variant where a lot's `entrances` name that side), the
 ##              kerb corners around each junction (sidewalk boxes + a
 ##              junction prop where two streets meet)
 ##     Lanes    Path3D lanes through every junction (edges carry their own)
@@ -24,6 +25,9 @@ extends RefCounted
 const DIRS: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 ## Edge scene yaw per side (its +Z must point into the cell), DIRS order.
 const SIDE_YAW := [0.0, -PI / 2, PI, PI / 2]
+## Lot `entrances` metadata names, in the lot's own frame (front = -Z,
+## right = +X as seen looking out of the front).
+const ENTRANCE_SIDES := {"front": Vector3(0, 0, -1), "back": Vector3(0, 0, 1), "left": Vector3(-1, 0, 0), "right": Vector3(1, 0, 0)}
 
 ## Problems found during the last build; empty = success.
 var errors := PackedStringArray()
@@ -35,6 +39,8 @@ var _shapes := {}
 var _box_meshes := {}
 var _reversed_curves := {}
 var _sidewalk_mat: Material
+## Vector3i(cell x, cell y, DIRS index) of every street side a lot enters from.
+var _entrances := {}
 
 
 ## Builds the city for `layout`. Returns the root node (also on errors, so
@@ -46,6 +52,7 @@ func build(layout: GridCityLayout) -> Node3D:
 	_shapes = {}
 	_box_meshes = {}
 	_reversed_curves = {}
+	_entrances = {}
 	_city = Node3D.new()
 	_city.name = "City"
 	errors.append_array(_map.errors)
@@ -141,10 +148,32 @@ func _build_lots() -> void:
 		_flatten(lot)
 		_resolve_slots(lot, rng)
 		_place_markers(lot, cell, placed)
+		_mark_entrances(lot, claim, yaw)
 		_add_bodies(lot)
 	for cell: Vector2i in _layout.cell_markers:
 		if not placed.has(cell):
 			_fail("marker '%s': cell %s has no lot" % [_layout.cell_markers[cell], cell])
+
+
+## Records the street sides named in the lot's `entrances` metadata (a
+## PackedStringArray of ENTRANCE_SIDES keys). A side of a superblock marks
+## every cell edge along it.
+func _mark_entrances(lot: Node3D, claim: Rect2i, yaw: float) -> void:
+	for side: String in lot.get_meta("entrances", PackedStringArray()):
+		if not ENTRANCE_SIDES.has(side):
+			_fail("%s: unknown entrance '%s' (use %s)" % [lot.name, side, ", ".join(ENTRANCE_SIDES.keys())])
+			continue
+		var v: Vector3 = Basis(Vector3.UP, yaw) * ENTRANCE_SIDES[side]
+		var i := DIRS.find(Vector2i(roundi(v.x), roundi(v.z)))
+		var found := false
+		for y in range(claim.position.y, claim.end.y):
+			for x in range(claim.position.x, claim.end.x):
+				var cell := Vector2i(x, y)
+				if not claim.has_point(cell + DIRS[i]) and _map.street_between(cell, cell + DIRS[i]):
+					_entrances[Vector3i(x, y, i)] = true
+					found = true
+		if not found:
+			_fail("%s: entrance '%s' faces no street" % [lot.name, side])
 
 
 ## Claim footprint in world x/z, minus the street edge on every side with a street.
@@ -284,6 +313,10 @@ func _build_streets() -> void:
 					continue
 				var line := (cell.y + maxi(dir.y, 0)) if dir.y != 0 else (cell.x + maxi(dir.x, 0))
 				var scene := _layout.avenue_edge if _map.is_avenue(line) else _layout.street_edge
+				if _entrances.has(Vector3i(c, r, i)):
+					var entrance := _layout.avenue_entrance_edge if _map.is_avenue(line) else _layout.street_entrance_edge
+					if entrance != null:
+						scene = entrance
 				if scene == null:
 					_fail("layout has no %s scene" % ("avenue_edge" if _map.is_avenue(line) else "street_edge"))
 					return

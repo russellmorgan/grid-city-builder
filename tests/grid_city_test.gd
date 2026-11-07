@@ -5,8 +5,9 @@ extends SceneTree
 ## Bakes the demo layout and checks: no builder errors (which covers every
 ## lot's lot_size vs its cell), one lot per claim, one edge per street side,
 ## no trimesh colliders, the named + prefixed markers, a strongly connected
-## lane graph (right- and left-hand traffic), deterministic output, and that
-## a broken layout reports errors instead of baking.
+## lane graph (right- and left-hand traffic), deterministic output, lot
+## entrances picking the entrance edge, and that a broken layout reports
+## errors instead of baking.
 
 const DEMO := "res://addons/grid_city/demo/demo_layout.tres"
 
@@ -69,6 +70,8 @@ func _initialize() -> void:
 	batched.free()
 	city.free()
 
+	_check_entrances(builder, layout)
+
 	var broken: GridCityLayout = layout.duplicate()
 	broken.cell_markers = {}
 	broken.cell_overrides = {}
@@ -82,6 +85,50 @@ func _initialize() -> void:
 		printerr("  - " + f)
 	print("GRID_CITY_TEST: %s" % ("PASS" if failures.is_empty() else "FAIL"))
 	quit(0 if failures.is_empty() else 1)
+
+
+## A lot with entrances "front" + "left" in the middle of a 3×3 grid gets the
+## entrance edge on exactly two perpendicular sides; a bad name is an error.
+func _check_entrances(builder: GridCityBuilder, demo: GridCityLayout) -> void:
+	var layout: GridCityLayout = demo.duplicate()
+	layout.rows = PackedStringArray(["DDD", "DDD", "DDD"])
+	layout.avenue_lines = PackedInt32Array()
+	layout.cell_markers = {}
+	var lot := Node3D.new()
+	lot.set_meta("lot_size", Vector2(70, 70))
+	lot.set_meta("entrances", PackedStringArray(["front", "left"]))
+	layout.cell_overrides = {Vector2i(1, 1): _pack(lot)}
+	var edge := Node3D.new()
+	var drive := Node3D.new()
+	drive.name = "Drive"
+	edge.add_child(drive)
+	drive.owner = edge
+	layout.street_entrance_edge = _pack(edge)
+	var city := builder.build(layout)
+	_check(builder.errors.is_empty(), "entrance bake errors: %s" % ", ".join(builder.errors))
+	var drives := city.find_children("Drive", "Node3D", true, false)
+	var sides: Array[String] = []
+	for d in drives:
+		sides.append(String(d.get_parent().name))
+		_check(d.get_parent().get_parent().name == "S_1_1", "entrance edge outside the lot's cell: %s" % city.get_path_to(d))
+	sides.sort()
+	_check(sides in [["EdgeE", "EdgeN"], ["EdgeE", "EdgeS"], ["EdgeS", "EdgeW"], ["EdgeN", "EdgeW"]],
+			"expected entrance edges on two perpendicular sides, got %s" % [sides])
+	city.free()
+	lot = Node3D.new()
+	lot.set_meta("lot_size", Vector2(70, 70))
+	lot.set_meta("entrances", PackedStringArray(["side"]))
+	layout.cell_overrides = {Vector2i(1, 1): _pack(lot)}
+	city = builder.build(layout)
+	_check(builder.errors.size() == 1, "unknown entrance name should report one error, got %s" % [builder.errors])
+	city.free()
+
+
+func _pack(node: Node) -> PackedScene:
+	var packed := PackedScene.new()
+	packed.pack(node)
+	node.free()
+	return packed
 
 
 func _check(ok: bool, msg: String) -> void:

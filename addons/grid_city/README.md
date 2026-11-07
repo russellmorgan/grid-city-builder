@@ -42,6 +42,7 @@ CSSSSSSSSC
   - Centred on the origin, with the front (street side) facing **−Z**.
   - The root needs a `lot_size` metadata (`Vector2`: x width, z depth). The builder checks it against the space the cell leaves.
   - Lots are rotated in 90° steps, so make lots square, or long along X for superblocks.
+  - Optional `entrances` metadata (`PackedStringArray` of `front`, `back`, `left`, `right`, in the lot's own frame; right = +X looking out of the front) puts the layout's `street_entrance_edge` / `avenue_entrance_edge` (e.g. a driveway in the middle of the sidewalk) on those sides. On a superblock, every cell edge along that side gets one. A side with no street is a bake error.
 - **Street edge scenes:**
   - The lattice line sits at z = 0 with +Z into the cell.
   - They span x ±(cell/2 − half_street − sidewalk), i.e. ±35 m by default.

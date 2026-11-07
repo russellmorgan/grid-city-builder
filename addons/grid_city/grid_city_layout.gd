@@ -60,6 +60,10 @@ extends Resource
 ## z = 0, +Z into the cell, x ∈ ±(cell_size / 2 - half_street - sidewalk).
 @export var avenue_edge: PackedScene
 @export var street_edge: PackedScene
+## Optional variants (e.g. a driveway mid-edge) for the sides a lot lists in
+## its `entrances` metadata; null falls back to the plain edge.
+@export var avenue_entrance_edge: PackedScene
+@export var street_entrance_edge: PackedScene
 ## Placed on each kerb corner where two streets meet.
 @export var avenue_junction_prop: PackedScene
 @export var street_junction_prop: PackedScene
